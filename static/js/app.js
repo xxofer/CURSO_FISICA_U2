@@ -1,15 +1,12 @@
-/* Interfaz de la Unidad 2. El dibujo se hace en el navegador; C, Q y U se calculan en Python (ver app.py y fisica.py). */
 const $=i=>document.getElementById(i),K=8.99,E0=8.854e-12;
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const eng=(x,u)=>{if(!isFinite(x))return'—';if(x===0)return'0 '+u;const p=[[1e-12,'p'],[1e-9,'n'],[1e-6,'µ'],[1e-3,'m'],[1,''],[1e3,'k'],[1e6,'M'],[1e9,'G']];let a=Math.abs(x),c=p[0];for(const q of p)if(a>=q[0])c=q;return(+(x/c[0]).toPrecision(4))+' '+c[1]+u};
 const num=(x,d=3)=>(+x.toFixed(d)).toString().replace('.',',');
 const outs=(id,a)=>$(id).innerHTML=a.map(([l,v])=>`<div><span>${l}</span><strong>${v}</strong></div>`).join('');
-/* Tabs */
 const upd={t4:()=>cap(),t5:()=>en()};
 function show(id){document.querySelectorAll('section').forEach(s=>s.hidden=s.id!==id);document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===id));upd[id]()}
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>show(b.dataset.t));
 
-/* Unidad 2: capacitores */
 const cc=$('cc'),k2=cc.getContext('2d');const post=async(u,b)=>{try{const r=await fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});if(!r.ok)return null;return await r.json()}catch(e){return null}};
 let Cs=0;
 async function cap(){const a=+$('sa').value,dd=+$('sd').value,k=+$('sk').value;$('sal').textContent=a+' cm²';$('sdl').textContent=num(dd/10,1)+' mm';
@@ -28,7 +25,6 @@ async function cap(){const a=+$('sa').value,dd=+$('sd').value,k=+$('sk').value;$
 ['sa','sd','sk'].forEach(i=>$(i).oninput=cap);
 $('toE').onclick=()=>{let u=[[1e-3,'1e-3'],[1e-6,'1e-6'],[1e-9,'1e-9'],[1e-12,'1e-12']].find(p=>Cs>=p[0]*.999)||[1e-12,'1e-12'];$('eu').value=u[1];$('ec').value=+(Cs/u[0]).toPrecision(5);show('t5')};
 
-/* Unidad 2: energía */
 const ce=$('ce'),e2=ce.getContext('2d');
 async function en(){const C=+$('ec').value*+$('eu').value,V=+$('ev').value;
  const r=await post('/api/energia',{C,V});
