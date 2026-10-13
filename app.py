@@ -1,4 +1,3 @@
-"""Servidor local de la Unidad 2 (Flask). Ejecuta:  python app.py  y abre http://127.0.0.1:5001"""
 import threading
 import webbrowser
 from flask import Flask, jsonify, render_template, request
